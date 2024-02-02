@@ -29,6 +29,7 @@ struct DetailView: View {
                     .clipShape(.capsule)
                     .offset(x: -8, y: -10)
             }
+            Text(book.date.formatted(date: .abbreviated, time: .omitted))
             Text(book.author)
                 .font(.title)
                 .padding()
@@ -62,7 +63,7 @@ struct DetailView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Book.self, configurations: config)
-        let example = Book(title: "TEST BOOK", author: "TEST AUTHOR", genre: "Mystery", review: "TEST REVIEW", rating: 5)
+        let example = Book(title: "TEST BOOK", author: "TEST AUTHOR", genre: "Mystery", review: "TEST REVIEW", rating: 5, date: .now)
         
         return DetailView(book: example)
             .modelContainer(container)
