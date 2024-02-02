@@ -25,7 +25,7 @@ struct ContentView: View {
                         HStack {
                             EmojiRatingView(rating: book.rating)
                                 .font(.largeTitle)
-                            VStack {
+                            VStack(alignment: .leading) {
                                 Text(book.title)
                                     .font(.headline)
                                 Text(book.author)
@@ -34,12 +34,16 @@ struct ContentView: View {
                         }
                     }
                 }
+                .onDelete(perform: deleteBooks)
             }
             .navigationTitle("Bookwarm")
             .navigationDestination(for: Book.self) { book in
                 DetailView(book: book)
             }
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Add Book", systemImage: "plus") {
                         showingAddScreen.toggle()
@@ -49,6 +53,12 @@ struct ContentView: View {
             .sheet(isPresented: $showingAddScreen) {
                 AddBookView()
             }
+        }
+    }
+    func deleteBooks(at offsets: IndexSet) {
+        for offset in offsets {
+            let book = books[offset]
+            modelContext.delete(book)
         }
     }
 }
