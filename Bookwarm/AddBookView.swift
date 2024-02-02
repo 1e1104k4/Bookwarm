@@ -42,6 +42,7 @@ struct AddBookView: View {
                         dismiss()
                     }
                 }
+                .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || author.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
             .navigationTitle("Add Book")
         }
